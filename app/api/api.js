@@ -1,4 +1,4 @@
-const host = "http://127.0.0.1:8000/api/"
+const host = "http://43.240.223.53:8000/api/"
 
 
 export const login = async (email, password) => {
@@ -102,80 +102,15 @@ export const create_order = async (access_token, amount, chain, coinType) => {
     }
 }
 
-
-export const cancel = async (access_token, orderNo) => {
-    const url = `${host}order/cancel/`
+export const s_search = async (name, part) => {
+    const url = `${host}stickers/search/?name=${name}&part=${part}`
+    // const headers = {"Authorization": `Bearer ${access_token}`}
     console.log(url)
-    try {
-        const response = await( await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${access_token}`
-            },
-            body: JSON.stringify({
-                orderNo: orderNo,
-            }),
-        })).json()
-        console.log(response)
-        if (response.code === 200) {
-            return response.body
-        } else {
-            return response
-        }
-    }
-    catch (error) {
-        console.log('Fetch error', error)
-    }
-}
-
-
-export const get_order = async (access_token) => {
-    const url = `${host}order/get/`
-    const headers = {"Authorization": `Bearer ${access_token}`}
-    console.log(url)
-    try {
-        const response = await( await fetch(url, {headers:headers})).json()
-        console.log(response)
-        if (response.code === 200) {
-            return response.body
-        } else {
-            return {}
-        }
-    }
-    catch (error) {
-        console.log('Fetch error', error)
-    }
-}
-
-
-export const get_order_lists = async (access_token, page, pageSize) => {
-    const url = `${host}order/list/?page=${page}&pageSize=${pageSize}`
-    const headers = {"Authorization": `Bearer ${access_token}`}
-    console.log(url)
-    try {
-        const response = await( await fetch(url, {headers:headers})).json()
-        console.log(response)
-        if (response.code === 200) {
-            return response.body
-        } else {
-            return {}
-        }
-    }
-    catch (error) {
-        console.log('Fetch error', error)
-    }
-}
-
-
-export const get_usdt_rmb = async () => {
-    const url = `${host}site/ur/`
-    // console.log(url)
     try {
         const response = await( await fetch(url)).json()
         console.log(response)
         if (response.code === 200) {
-            return parseFloat(response.body.data)
+            return response
         } else {
             return {}
         }
@@ -185,23 +120,17 @@ export const get_usdt_rmb = async () => {
     }
 }
 
-
-export const qr_upload = async (access_token, formData, orderNo) => {
-    const url = `${host}order/qr_upload/orderNo=${orderNo}/`
+export const s_get = async (name) => {
+    const url = `${host}stickers/get/?name=${name}`
+    // const headers = {"Authorization": `Bearer ${access_token}`}
     console.log(url)
     try {
-        const response = await( await fetch(url, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${access_token}`
-            },
-            body: formData,
-        })).json()
+        const response = await( await fetch(url)).json()
         console.log(response)
         if (response.code === 200) {
-            return response.body
-        } else {
             return response
+        } else {
+            return {}
         }
     }
     catch (error) {
